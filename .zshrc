@@ -11,6 +11,15 @@ fi
 # These paths match the directories created by install.sh
 [[ -f "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 [[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# -- Keybindings for History Search --
+# Use Up/Down arrows to search history based on prefix
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+# Support for some terminal emulators
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # -- Tools --
 # Initialize Zoxide (Smart cd)
@@ -26,6 +35,11 @@ fi
 
 # -- Zsh Settings --
 autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # Case-insensitive completion
+zstyle ':completion:*' menu select                 # Visual menu for completion
+setopt AUTO_LIST                                  # Automatically list choices on ambiguous completion
+setopt AUTO_MENU                                  # Show menu after second tab press
+
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000

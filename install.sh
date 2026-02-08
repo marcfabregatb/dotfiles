@@ -27,6 +27,7 @@ install_plugin() {
 
 install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
 install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
+install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
 
 # 3. Symlink configuration
 echo "🔗 Creating symlinks..."
