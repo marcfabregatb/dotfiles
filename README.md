@@ -1,16 +1,24 @@
 # 🚀 Marc's Dotfiles
 
-
 This is my choice of configuration files, optimized for **Debian** and **VS Code DevContainers**. Use at your own risk!
 
 ## ✨ Features
 
 - **Shell (Zsh):**
-  - **Oh My Posh**: Custom prompt theme using `theme.omp.json`.
-  - **Zoxide**: Smarter `cd` command for fast navigation.
+  - **Oh My Posh**: Custom prompt theme with **dynamic environment colors**:
+    - 🟣 **Purple**: Dev Containers.
+    - 🟠 **Orange**: GitHub Codespaces.
+    - 🟢 **Green**: Development servers (`mydeployments-dev`).
+    - 🔴 **Red**: Production servers (`mydeployments-p`).
+  - **Historic Autocomplete**: Use **Up/Down Arrows** to search history by prefix.
+  - **Auto-suggestions**: Command suggestions based on your history (Right Arrow to accept).
   - **Syntax Highlighting**: Real-time coloring of commands.
-  - **Auto-suggestions**: Command suggestions based on your history.
-  - **Shared History**: Commands are synced across all open terminal sessions.
+  - **Smarter Completion**: Case-insensitive tab completion with a visual menu.
+  - **Zoxide**: Smarter `cd` command for fast navigation.
+
+- **Infrastructure:**
+  - **Docker Ready**: Automatically installs Docker Engine and Compose on fresh systems.
+  - **Container Aware**: Installer skips redundant steps when running inside a container.
 
 - **Editor (Vim):**
   - Minimal and fast configuration.
@@ -38,13 +46,13 @@ cd ~/dotfiles
 chmod +x install.sh
 ./install.sh
 
-# 4. Change default shell to Zsh (requires logout/restart)
-chsh -s $(which zsh)
+# 4. Restart shell
+source ~/.zshrc
 ```
 
 ### VS Code DevContainers
 
-To automatically use these dotfiles in any DevContainer, add the following to your VS Code user **settings.json**:
+To automatically use these dotfiles in any DevContainer, add the following to your VS Code user **settings.json** (or your `devcontainer.json`):
 
 ```json
 "dotfiles.repository": "https://github.com/marcfabregatb/dotfiles.git",
@@ -57,30 +65,18 @@ To automatically use these dotfiles in any DevContainer, add the following to yo
 ## 📋 Prerequisites
 
 ### 1. Nerd Fonts
-To see the icons in the shell prompt correctly, you must have a [Nerd Font](https://www.nerdfonts.com/) installed on your **host machine** (the computer you are physically typing on).
+To see the icons in the shell prompt correctly, you must have a [Nerd Font](https://www.nerdfonts.com/) installed on your **host machine**.
 
-You can install a font easily using the `oh-my-posh` command:
-
-- **Windows (PowerShell):**
-  ```powershell
-  oh-my-posh font install
+- **Installation**: Run `oh-my-posh font install` and pick **CaskaydiaCove**.
+- **VS Code Configuration**: Update your `settings.json`:
+  ```json
+  "terminal.integrated.fontFamily": "'CaskaydiaCove Nerd Font'",
   ```
-- **macOS / Linux:**
-  ```bash
-  oh-my-posh font install
-  ```
-*Recommended: Choose **CaskaydiaCove** or **Meslo** when prompted.*
-
-### 2. VS Code Configuration
-If using VS Code, update your `settings.json` to use the installed font:
-```json
-"terminal.integrated.fontFamily": "'CaskaydiaCove Nerd Font'",
-```
 
 ## 📂 Structure
 
-- `.zshrc`: Main Zsh configuration with dynamic path detection.
+- `.zshrc`: Main Zsh configuration with dynamic path detection and completion logic.
 - `.vimrc`: Quality-of-life Vim settings.
-- `install.sh`: Robust, idempotent installation script.
-- `theme.omp.json`: Oh My Posh prompt theme configuration.
+- `install.sh`: Robust, idempotent installation script (supports Docker & Homebrew).
+- `theme.omp.json`: Oh My Posh prompt theme with environment-aware colors.
 - `plugins/`: (Created during install) Directory for Zsh plugin clones.
