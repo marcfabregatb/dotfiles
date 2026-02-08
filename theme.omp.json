@@ -28,8 +28,7 @@
           "background_templates": [
             "{{ if env \"REMOTE_CONTAINERS\" }}#107c10{{ end }}",
             "{{ if env \"CODESPACES\" }}#FF8C00{{ end }}",
-            "{{ if eq \"mydeployments-dev\" .HostName }}#9A00D7{{ end }}",
-            "{{ if contains \"mydeployments-p\" .HostName }}#D00000{{ end }}"
+            "{{ if contains \"-dev\" .HostName }}#9A00D7{{ end }}"
           ],
           "foreground": "#ffffff",
           "leading_diamond": "\ue0b6",
