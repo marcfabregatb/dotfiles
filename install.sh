@@ -6,8 +6,9 @@ DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 echo "🚀 Starting Dotfiles installation..."
 echo "📂 Dotfiles directory: $DOTFILES_DIR"
 
-# 1. Create Plugins directory
+# 1. Create Plugins directory and ensure permissions
 mkdir -p "$DOTFILES_DIR/plugins"
+chmod -R 755 "$DOTFILES_DIR/plugins"
 
 # 2. Download Plugins if missing
 install_plugin() {
@@ -29,27 +30,44 @@ echo "🔗 Creating symlinks..."
 ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 ln -sf "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 
-# 4. Attempt to install missing packages (Vim, Zoxide, Zsh, Curl, Git)
-if command -v apt &> /dev/null && [ -f /etc/debian_version ]; then
-    PACKAGES_TO_INSTALL=()
-    for pkg in vim zoxide zsh curl git; do
-        if ! command -v "$pkg" &> /dev/null; then
-            PACKAGES_TO_INSTALL+=("$pkg")
-        fi
-    done
+# 4. Install Core Packages via apt
+echo "📦 Updating system and installing core packages..."
+sudo apt update
+sudo apt install -y vim zoxide zsh curl git build-essential
 
-    if [ ${#PACKAGES_TO_INSTALL[@]} -ne 0 ]; then
-        echo "📦 Installing missing packages: ${PACKAGES_TO_INSTALL[*]}"
-        sudo apt update && sudo apt install -y "${PACKAGES_TO_INSTALL[@]}"
-    else
-        echo "✅ All system packages are already installed."
-    fi
+# 5. Install Homebrew (needed for Oh My Posh and other tools)
+if ! command -v brew &> /dev/null; then
+    echo "🍺 Installing Homebrew for Linux..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+else
+    echo "✅ Homebrew is already installed."
 fi
 
-# 5. Check for Oh My Posh
+# 6. Install Oh My Posh via brew
 if ! command -v oh-my-posh &> /dev/null; then
-    echo "⚠️ Oh My Posh is not installed. You might want to install it manually:"
-    echo "https://ohmyposh.dev/docs/installation/linux"
+    echo "✨ Installing Oh My Posh..."
+    brew install oh-my-posh
+else
+    echo "✅ Oh My Posh is already installed."
+fi
+
+# 7. Install Docker and Docker Compose
+if ! command -v docker &> /dev/null; then
+    echo "🐳 Installing Docker..."
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    rm get-docker.sh
+    sudo usermod -aG docker "$USER"
+    echo "👤 Added $USER to docker group. Please re-login or run 'newgrp docker'."
+else
+    echo "✅ Docker is already installed: $(docker --version)"
+fi
+
+# Ensure Docker Compose plugin is installed
+if ! docker compose version &> /dev/null; then
+    echo "📥 Installing Docker Compose plugin..."
+    sudo apt-get update && sudo apt-get install -y docker-compose-plugin
 fi
 
 echo "✅ Done! Please restart your terminal or run 'source ~/.zshrc'"

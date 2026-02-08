@@ -2,6 +2,11 @@
 # Dynamically find the dotfiles directory (works even if symlinked)
 export DOTFILES_DIR="${${(%):-%x}:A:h}"
 
+# -- Homebrew (Linux) --
+if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 # -- Plugins --
 # These paths match the directories created by install.sh
 [[ -f "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
