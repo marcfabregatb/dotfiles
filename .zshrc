@@ -28,8 +28,10 @@ if command -v zoxide &> /dev/null; then
     alias cd="z"
 fi
 
-# Initialize Oh My Posh
+# Initialize Oh My Posh with our specific theme
 if command -v oh-my-posh &> /dev/null; then
+    # Clear any previous theme set by devcontainer features
+    unset POSH_THEME
     eval "$(oh-my-posh init zsh --config "$DOTFILES_DIR/theme.omp.json")"
 fi
 
