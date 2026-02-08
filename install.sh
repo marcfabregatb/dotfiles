@@ -31,14 +31,19 @@ ln -sf "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 
 # 4. Attempt to install missing packages (Vim, Zoxide, Zsh, Curl, Git)
 if command -v apt &> /dev/null && [ -f /etc/debian_version ]; then
-    echo "📦 Checking for missing packages (Vim, Zoxide, Zsh, Curl, Git)..."
-    sudo apt update
+    PACKAGES_TO_INSTALL=()
     for pkg in vim zoxide zsh curl git; do
         if ! command -v "$pkg" &> /dev/null; then
-            echo "Installing $pkg..."
-            sudo apt install -y "$pkg"
+            PACKAGES_TO_INSTALL+=("$pkg")
         fi
     done
+
+    if [ ${#PACKAGES_TO_INSTALL[@]} -ne 0 ]; then
+        echo "📦 Installing missing packages: ${PACKAGES_TO_INSTALL[*]}"
+        sudo apt update && sudo apt install -y "${PACKAGES_TO_INSTALL[@]}"
+    else
+        echo "✅ All system packages are already installed."
+    fi
 fi
 
 # 5. Check for Oh My Posh
