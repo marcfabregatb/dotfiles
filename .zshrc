@@ -51,6 +51,9 @@ setopt AUTO_LIST                                  # Automatically list choices o
 setopt AUTO_MENU                                  # Show menu after second tab press
 
 # -- zsh-autocomplete Configuration --
+# Disable internal recent-dirs to prevent recursion with zoxide
+zstyle ':autocomplete:*' recent-dirs off
+
 # Start with history search (like PSReadLine PredictionSource History)
 zstyle ':autocomplete:*' default-context history-incremental-search-backward
 
