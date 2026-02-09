@@ -1,20 +1,23 @@
 # 🚀 Marc's Dotfiles
 
-This is my choice of configuration files, optimized for **Debian** and **VS Code DevContainers**. Use at your own risk!
+This is my choice of configuration files, optimized for **Debian** and **VS Code DevContainers**. 
 
 ## ✨ Features
 
 - **Shell (Zsh):**
-  - **Oh My Posh**: Custom prompt theme with **dynamic environment colors**:
+  - **Oh My Posh**: Custom prompt theme with **environment colors**:
     - 🟣 **Purple**: Dev Containers.
     - 🟠 **Orange**: GitHub Codespaces.
     - 🟢 **Green**: Development servers (`mydeployments-dev`).
-    - 🔴 **Red**: Production servers (`mydeployments-p`).
-  - **Historic Autocomplete**: Use **Up/Down Arrows** to search history by prefix.
-  - **Auto-suggestions**: Command suggestions based on your history (Right Arrow to accept).
-  - **Syntax Highlighting**: Real-time coloring of commands.
-  - **Smarter Completion**: Case-insensitive tab completion with a visual menu.
+  - **Plugins**:
+    - **zsh-autocomplete**: Real-time type-ahead completion and visual menus.
+    - **zsh-autosuggestions**: Fish-like history suggestions (Right Arrow to accept).
+    - **zsh-syntax-highlighting**: Highlights commands as you type.
+    - **zsh-history-substring-search**: Search history with **Up/Down Arrows** using what you've already typed.
+
+- **Productivity Tools:**
   - **Zoxide**: Smarter `cd` command for fast navigation.
+  - **fzf**: Fuzzy finder integration for command history and file searching.
 
 - **Infrastructure:**
   - **Docker Ready**: Automatically installs Docker Engine and Compose on fresh systems.
