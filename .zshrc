@@ -9,17 +9,9 @@ fi
 
 # -- Plugins --
 # These paths match the directories created by install.sh
+[[ -f "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 [[ -f "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 [[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-[[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
-
-# -- Keybindings for History Search --
-# Use Up/Down arrows to search history based on prefix
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-# Support for some terminal emulators
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # -- Tools --
 # Initialize Zoxide (Smart cd)
@@ -36,17 +28,29 @@ if command -v oh-my-posh &> /dev/null; then
 fi
 
 # -- Zsh Settings --
-autoload -Uz compinit && compinit
+# autoload -Uz compinit && compinit # Managed by zsh-autocomplete
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # Case-insensitive completion
 zstyle ':completion:*' menu select                 # Visual menu for completion
 setopt AUTO_LIST                                  # Automatically list choices on ambiguous completion
 setopt AUTO_MENU                                  # Show menu after second tab press
+
+# -- zsh-autocomplete Configuration --
+# Start with history search (like PSReadLine PredictionSource History)
+zstyle ':autocomplete:*' default-context history-incremental-search-backward
+
+# Only show the list after typing at least 1 character
+zstyle ':autocomplete:*' min-input 1
+
+# Limit list to 50% of screen height, and hide it if the buffer is empty
+zstyle -e ':autocomplete:*:*' list-lines '[[ -n $BUFFER ]] && reply=( $(( LINES / 2 )) ) || reply=( 0 )'
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY # Share history between sessions
+setopt HIST_IGNORE_ALL_DUPS # Do not record a line that has been recorded before
+setopt HIST_FIND_NO_DUPS    # Do not display a line previously found
 
 # -- .NET Settings --
 export DOTNET_CLI_TELEMETRY_OPTOUT=1

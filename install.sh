@@ -28,6 +28,7 @@ install_plugin() {
 install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
 install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
 install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
+install_plugin "zsh-autocomplete" "https://github.com/marlonrichert/zsh-autocomplete"
 
 # 3. Symlink configuration
 echo "🔗 Creating symlinks..."
@@ -38,7 +39,13 @@ ln -sf "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 if [ "$IN_CONTAINER" = false ]; then
     echo "📦 Installing system packages..."
     sudo apt update
-    sudo apt install -y vim zoxide zsh curl git build-essential
+    sudo apt install -y vim zoxide zsh curl git build-essential fzf
+fi
+
+# 5. Install fzf via brew if apt is not used
+if ! command -v fzf &> /dev/null && command -v brew &> /dev/null; then
+    echo "🔍 Installing fzf..."
+    brew install fzf
 fi
 
 # 5. Install Homebrew for Linux (Only if Oh My Posh is missing)
