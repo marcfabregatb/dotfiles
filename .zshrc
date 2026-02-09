@@ -10,12 +10,18 @@ fi
 
 # -- Plugins --
 # These paths match the directories created by install.sh
-[[ -f "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+# 1. Autosuggestions
 [[ -f "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
-[[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# 2. History Substring Search (Should be before autocomplete/syntax-highlighting)
 [[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# 3. Autocomplete (Should be after autosuggestions/history-search and before syntax-highlighting)
+[[ -f "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+
+# 4. Syntax Highlighting (Must be last)
+[[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # -- Tools --
 # Initialize fzf (Fuzzy Finder)
