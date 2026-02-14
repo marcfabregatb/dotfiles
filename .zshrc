@@ -8,6 +8,9 @@ if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
+# -- Atuin env (adds ~/.atuin/bin to PATH) --
+[[ -f "$HOME/.atuin/bin/env" ]] && source "$HOME/.atuin/bin/env"
+
 # -- Plugins --
 # 1. Autosuggestions (fish-like ghost text from history, accept with Right Arrow)
 [[ -f "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -18,17 +21,15 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 [[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # -- Tools --
-# fzf (Fuzzy Finder: Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
+# fzf (Fuzzy Finder: Ctrl+T for files, Alt+C for cd, completion with **)
 if command -v fzf &> /dev/null; then
-    [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
     [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
     if command -v brew &> /dev/null; then
-        [[ -f "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh" ]] && source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
         [[ -f "$(brew --prefix)/opt/fzf/shell/completion.zsh" ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
     fi
 fi
 
-# Atuin (visual history search with Up arrow)
+# Atuin (visual history search: Up arrow to browse, Ctrl+R to search)
 if command -v atuin &> /dev/null; then
     eval "$(atuin init zsh)"
 fi
