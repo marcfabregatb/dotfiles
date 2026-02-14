@@ -11,12 +11,12 @@ This is my choice of configuration files, optimized for **Debian** and **VS Code
     - 🟢 **Green**: Development servers (`mydeployments-dev`).
   - **Plugins**:
     - **zsh-autosuggestions**: Fish-like history suggestions (Right Arrow to accept).
-    - **zsh-history-substring-search**: Search history with **Up/Down Arrows** using what you've already typed.
     - **zsh-syntax-highlighting**: Highlights commands as you type.
 
 - **Productivity Tools:**
+  - **Atuin**: Visual history search. Press **Up** to see a navigable list of past commands filtered by what you've typed.
   - **Zoxide**: Smarter `cd` command for fast navigation.
-  - **fzf**: Fuzzy finder integration for command history and file searching.
+  - **fzf**: Fuzzy finder integration for file searching and completion.
 
 - **Infrastructure:**
   - **Docker Ready**: Automatically installs Docker Engine and Compose on fresh systems.

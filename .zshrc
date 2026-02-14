@@ -14,10 +14,7 @@ fi
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# 2. History Substring Search (type partial command, then Up/Down to filter history)
-[[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
-
-# 3. Syntax Highlighting (colors commands as you type; must be loaded last)
+# 2. Syntax Highlighting (colors commands as you type; must be loaded last)
 [[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # -- Tools --
@@ -29,6 +26,11 @@ if command -v fzf &> /dev/null; then
         [[ -f "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh" ]] && source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
         [[ -f "$(brew --prefix)/opt/fzf/shell/completion.zsh" ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
     fi
+fi
+
+# Atuin (visual history search with Up arrow)
+if command -v atuin &> /dev/null; then
+    eval "$(atuin init zsh)"
 fi
 
 # Zoxide (smart cd replacement)
@@ -58,14 +60,6 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
-
-# -- Key Bindings --
-if [[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
-    bindkey '^[[A' history-substring-search-up
-    bindkey '^[[B' history-substring-search-down
-    bindkey "$terminfo[kcuu1]" history-substring-search-up
-    bindkey "$terminfo[kcud1]" history-substring-search-down
-fi
 
 # -- .NET Settings --
 export DOTNET_CLI_TELEMETRY_OPTOUT=1

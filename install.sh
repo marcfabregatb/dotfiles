@@ -27,7 +27,6 @@ install_plugin() {
 
 install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
 install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
-install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
 
 # 3. Symlink configuration
 echo "🔗 Creating symlinks..."
@@ -76,7 +75,15 @@ if ! command -v oh-my-posh &> /dev/null; then
     fi
 fi
 
-# 7. Install Docker (Only if NOT in a container)
+# 7. Install Atuin (visual shell history with Up arrow navigation)
+if ! command -v atuin &> /dev/null; then
+    echo "📥 Installing Atuin..."
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+    # Source the env so atuin is available for the rest of the script
+    [ -f "$HOME/.atuin/bin/env" ] && source "$HOME/.atuin/bin/env"
+fi
+
+# 8. Install Docker (Only if NOT in a container)
 if [ "$IN_CONTAINER" = false ] && ! command -v docker &> /dev/null; then
     echo "🐳 Installing Docker..."
     curl -fsSL https://get.docker.com -o get-docker.sh
@@ -87,7 +94,7 @@ fi
 
 echo "✅ Done! Please restart your terminal or run 'source ~/.zshrc'"
 
-# 8. Check current shell
+# 9. Check current shell
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "⚠️  Warning: Your default shell is currently $SHELL, not zsh."
     echo "👉 To change it to zsh, run: chsh -s \$(which zsh)"
