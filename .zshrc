@@ -9,76 +9,57 @@ if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
 fi
 
 # -- Plugins --
-# These paths match the directories created by install.sh
-# 1. Autosuggestions
+# 1. Autosuggestions (fish-like ghost text from history, accept with Right Arrow)
 [[ -f "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# 2. History Substring Search (Should be before autocomplete/syntax-highlighting)
+# 2. History Substring Search (type partial command, then Up/Down to filter history)
 [[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
-# 3. Autocomplete (Should be after autosuggestions/history-search and before syntax-highlighting)
-[[ -f "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-
-# 4. Syntax Highlighting (Must be last)
+# 3. Syntax Highlighting (colors commands as you type; must be loaded last)
 [[ -f "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$DOTFILES_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # -- Tools --
-# Initialize fzf (Fuzzy Finder)
+# fzf (Fuzzy Finder: Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
 if command -v fzf &> /dev/null; then
-    # Debian/Ubuntu standard paths
     [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
     [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
-    # Homebrew paths (if applicable)
     if command -v brew &> /dev/null; then
         [[ -f "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh" ]] && source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
         [[ -f "$(brew --prefix)/opt/fzf/shell/completion.zsh" ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
     fi
 fi
 
-# Initialize Zoxide (Smart cd)
+# Zoxide (smart cd replacement)
 if command -v zoxide &> /dev/null; then
     eval "$(zoxide init zsh)"
     alias cd="z"
 fi
 
-# Initialize Oh My Posh with our specific theme
+# Oh My Posh prompt
 if command -v oh-my-posh &> /dev/null; then
-    # Clear any previous theme set by devcontainer features
     unset POSH_THEME
     eval "$(oh-my-posh init zsh --config "$DOTFILES_DIR/theme.omp.json")"
 fi
 
-# -- Zsh Settings --
-# autoload -Uz compinit && compinit # Managed by zsh-autocomplete
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # Case-insensitive completion
-zstyle ':completion:*' menu select                 # Visual menu for completion
-setopt AUTO_LIST                                  # Automatically list choices on ambiguous completion
-setopt AUTO_MENU                                  # Show menu after second tab press
+# -- Completion --
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' menu select
 
-# -- zsh-autocomplete Configuration --
-# Disable internal recent-dirs to prevent recursion with zoxide
-zstyle ':autocomplete:*' recent-dirs off
-
-# Start with history search (like PSReadLine PredictionSource History)
-zstyle ':autocomplete:*' default-context history-incremental-search-backward
-
-# Only show the list after typing at least 1 character
-zstyle ':autocomplete:*' min-input 1
-
-# Limit list to 50% of screen height, and hide it if the buffer is empty
-zstyle -e ':autocomplete:*:*' list-lines '[[ -n $BUFFER ]] && reply=( $(( LINES / 2 )) ) || reply=( 0 )'
-
+# -- History --
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=50000
+SAVEHIST=50000
 setopt APPEND_HISTORY
-setopt SHARE_HISTORY # Share history between sessions
-setopt HIST_IGNORE_ALL_DUPS # Do not record a line that has been recorded before
-setopt HIST_FIND_NO_DUPS    # Do not display a line previously found
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
 
 # -- Key Bindings --
-# Use history substring search
 if [[ -f "$DOTFILES_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
     bindkey '^[[A' history-substring-search-up
     bindkey '^[[B' history-substring-search-down

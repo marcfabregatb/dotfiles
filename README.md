@@ -10,10 +10,9 @@ This is my choice of configuration files, optimized for **Debian** and **VS Code
     - 🟠 **Orange**: GitHub Codespaces.
     - 🟢 **Green**: Development servers (`mydeployments-dev`).
   - **Plugins**:
-    - **zsh-autocomplete**: Real-time type-ahead completion and visual menus.
     - **zsh-autosuggestions**: Fish-like history suggestions (Right Arrow to accept).
-    - **zsh-syntax-highlighting**: Highlights commands as you type.
     - **zsh-history-substring-search**: Search history with **Up/Down Arrows** using what you've already typed.
+    - **zsh-syntax-highlighting**: Highlights commands as you type.
 
 - **Productivity Tools:**
   - **Zoxide**: Smarter `cd` command for fast navigation.
