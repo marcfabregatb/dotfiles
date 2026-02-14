@@ -1,5 +1,16 @@
 #!/bin/bash
 
+REPO_URL="https://github.com/marcfabregatb/dotfiles.git"
+TARGET_DIR="$HOME/dotfiles"
+
+# Bootstrap: if run via curl|bash, clone the repo first
+if [ -z "${BASH_SOURCE[0]}" ] || [ "${BASH_SOURCE[0]}" = "bash" ]; then
+    echo "📥 Cloning dotfiles..."
+    command -v git &> /dev/null || { sudo apt update && sudo apt install -y git; }
+    git clone "$REPO_URL" "$TARGET_DIR" 2>/dev/null || git -C "$TARGET_DIR" pull
+    exec bash "$TARGET_DIR/install.sh"
+fi
+
 # Get the absolute path of the dotfiles directory
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 

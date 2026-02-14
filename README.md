@@ -32,24 +32,17 @@ This is my choice of configuration files, optimized for **Debian** and **VS Code
 
 ## 🛠️ Installation
 
-### Standalone Debian / Ubuntu VM
-
-To install these dotfiles on a fresh Linux environment, run the following commands:
+### Quick Install (one-liner)
 
 ```bash
-# 1. Install Git
-sudo apt update && sudo apt install -y git
+bash <(curl -fsSL https://raw.githubusercontent.com/marcfabregatb/dotfiles/main/install.sh)
+```
 
-# 2. Clone the repository
+### Manual Install
+
+```bash
 git clone https://github.com/marcfabregatb/dotfiles.git ~/dotfiles
-
-# 3. Run the installer
-cd ~/dotfiles
-chmod +x install.sh
-./install.sh
-
-# 4. Restart shell
-source ~/.zshrc
+cd ~/dotfiles && ./install.sh
 ```
 
 ### VS Code DevContainers
