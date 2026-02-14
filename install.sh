@@ -23,7 +23,25 @@ fi
 echo "🚀 Starting Dotfiles installation (Debian/Ubuntu)..."
 [ "$IN_CONTAINER" = true ] && echo "🐳 Detected Dev Container environment"
 
-# 1. Create Plugins directory
+# 1. Clean up old plugins/caches from previous installs
+ACTIVE_PLUGINS=("zsh-autosuggestions" "zsh-syntax-highlighting")
+
+if [ -d "$DOTFILES_DIR/plugins" ]; then
+    for dir in "$DOTFILES_DIR/plugins"/*/; do
+        plugin_name=$(basename "$dir")
+        found=false
+        for active in "${ACTIVE_PLUGINS[@]}"; do
+            [ "$plugin_name" = "$active" ] && found=true
+        done
+        if [ "$found" = false ]; then
+            echo "🧹 Removing old plugin: $plugin_name"
+            rm -rf "$dir"
+        fi
+    done
+fi
+
+rm -f "$HOME"/.zcompdump*
+
 mkdir -p "$DOTFILES_DIR/plugins"
 
 # 2. Download Plugins
