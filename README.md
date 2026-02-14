@@ -11,12 +11,12 @@ This is my choice of configuration files, optimized for **Debian** and **VS Code
     - 🟢 **Green**: Development servers (`mydeployments-dev`).
   - **Plugins**:
     - **zsh-autosuggestions**: Fish-like history suggestions (Right Arrow to accept).
-    - **zsh-history-substring-search**: Search history with **Up/Down Arrows** using what you've already typed.
     - **zsh-syntax-highlighting**: Highlights commands as you type.
 
 - **Productivity Tools:**
+  - **Atuin**: Visual history search. Press **Up** to see a navigable list of past commands filtered by what you've typed.
   - **Zoxide**: Smarter `cd` command for fast navigation.
-  - **fzf**: Fuzzy finder integration for command history and file searching.
+  - **fzf**: Fuzzy finder integration for file searching and completion.
 
 - **Infrastructure:**
   - **Docker Ready**: Automatically installs Docker Engine and Compose on fresh systems.
@@ -32,24 +32,17 @@ This is my choice of configuration files, optimized for **Debian** and **VS Code
 
 ## 🛠️ Installation
 
-### Standalone Debian / Ubuntu VM
-
-To install these dotfiles on a fresh Linux environment, run the following commands:
+### Quick Install (one-liner)
 
 ```bash
-# 1. Install Git
-sudo apt update && sudo apt install -y git
+bash <(curl -fsSL https://raw.githubusercontent.com/marcfabregatb/dotfiles/main/install.sh)
+```
 
-# 2. Clone the repository
+### Manual Install
+
+```bash
 git clone https://github.com/marcfabregatb/dotfiles.git ~/dotfiles
-
-# 3. Run the installer
-cd ~/dotfiles
-chmod +x install.sh
-./install.sh
-
-# 4. Restart shell
-source ~/.zshrc
+cd ~/dotfiles && ./install.sh
 ```
 
 ### VS Code DevContainers
