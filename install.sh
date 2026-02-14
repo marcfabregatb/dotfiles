@@ -48,9 +48,11 @@ mkdir -p "$DOTFILES_DIR/plugins"
 install_plugin() {
     local name=$1
     local url=$2
-    if [ ! -d "$DOTFILES_DIR/plugins/$name" ]; then
+    local target="$DOTFILES_DIR/plugins/$name"
+    if [ ! -d "$target" ] || [ -z "$(ls -A "$target")" ]; then
+        rm -rf "$target"
         echo "📥 Downloading $name..."
-        git clone --depth 1 "$url" "$DOTFILES_DIR/plugins/$name"
+        git clone --depth 1 "$url" "$target"
     fi
 }
 
