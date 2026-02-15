@@ -2,6 +2,7 @@
 zmodload zsh/terminfo
 # Dynamically find the dotfiles directory (works even if symlinked)
 export DOTFILES_DIR="${${(%):-%x}:A:h}"
+export PATH="$HOME/.local/bin:$PATH"
 
 # -- Homebrew (Linux) --
 if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then

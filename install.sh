@@ -123,9 +123,15 @@ if [ "$IN_CONTAINER" = false ] && ! command -v docker &> /dev/null; then
     sudo usermod -aG docker "$USER"
 fi
 
+# 9. Install Claude Code CLI
+if ! command -v claude &> /dev/null; then
+    echo "🤖 Installing Claude Code CLI..."
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 echo "✅ Done! Please restart your terminal or run 'source ~/.zshrc'"
 
-# 9. Check current shell
+# 10. Check current shell
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "⚠️  Warning: Your default shell is currently $SHELL, not zsh."
     echo "👉 To change it to zsh, run: chsh -s \$(which zsh)"
