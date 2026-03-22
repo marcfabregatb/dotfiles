@@ -1,0 +1,132 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "author": "Marc Fabregat",
+  "blocks": [
+    {
+      "alignment": "right",
+      "horizontal_offset": 0,
+      "segments": [
+        {
+          "foreground": "#007ACC",
+          "template": " {{ .CurrentDate | date .Format }} ",
+          "properties": {
+            "time_format": "15:04:05"
+          },
+          "style": "plain",
+          "type": "time"
+        }
+      ],
+      "type": "prompt",
+      "vertical_offset": -1
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "os",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "foreground": "#ffffff",
+          "background": "#FCC624",
+          "background_templates": [
+            "{{ if eq .Icon \"\uf31b\" }}#E95420{{ end }}",
+            "{{ if eq .Icon \"\uf306\" }}#A80030{{ end }}",
+            "{{ if eq .Icon \"\uF179\" }}#A2AAAD{{ end }}",
+            "{{ if eq .Icon \"\uE62A\" }}#00ADEF{{ end }}"
+          ],
+          "template": " {{ .Icon }} "
+        },
+        {
+          "background": "#3A86FF",
+          "background_templates": [
+            "{{ if env \"REMOTE_CONTAINERS\" }}#107c10{{ end }}",
+            "{{ if env \"CODESPACES\" }}#FF8C00{{ end }}",
+            "{{ if contains \"-dev\" .HostName }}#9A00D7{{ end }}"
+          ],
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": " {{ .UserName }}@{{ .HostName }} ",
+          "type": "session"
+        },
+        {
+          "background": "#0000ff",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "prefix": "<#ffffff>  </>",
+            "style": "agnoster_short",
+            "enable_hyperlink": true,
+            "folder_icon": "<#ffffff> </>",
+            "folder_separator_icon": "<#ffffff> </>",
+            "home_icon": " "
+          },
+          "style": "powerline",
+          "template": " \ue5ff {{ .Path }} ",
+          "type": "path"
+        },
+      
+        {
+          "background": "#FFFB38",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#ffeb95{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#c5e478{{ end }}",
+            "{{ if gt .Ahead 0 }}#C792EA{{ end }}",
+            "{{ if gt .Behind 0 }}#C792EA{{ end }}"
+          ],
+          "foreground": "#011627",
+          "leading_diamond": "<transparent,background>\ue0b0</>",
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": false,
+            "fetch_upstream_icon": true
+          },
+          "style": "diamond",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#ef5350> \uf046 {{ .Staging.String }}</>{{ end }} ",
+          "trailing_diamond": "",
+          "type": "git"
+        },
+        {
+          "background": "#2e9599",
+          "background_templates": [
+            "{{ if gt .Code 0 }}#f1184c{{ end }}"
+          ],
+          "foreground": "#ffffff",
+          "leading_diamond": "<transparent,background>\ue0b0</>",
+          "style": "diamond",
+          "template": " \uf7d4 ",
+          "trailing_diamond": "\ue0b4",
+          "type": "exit"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "root",
+          "style": "powerline",
+          "foreground": "#ffff66",
+          "template": " \uf0e7 "
+        },
+        {
+          "type": "exit",
+          "style": "plain",
+          "foreground": "#ffffff",
+          "template": "❯ ",
+          "properties": {
+            "always_enabled": true
+          },
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#ff0000{{ end }}"
+          ]
+        }
+      ]
+    }
+  ],
+  "version": 2
+}
