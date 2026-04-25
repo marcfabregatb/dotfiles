@@ -19,7 +19,7 @@ rm -f "$HOME"/.zcompdump*
 mkdir -p "$DOTFILES_DIR/plugins"
 
 # -- Install apt packages (only missing ones) --
-apt_packages=(zsh curl git)
+apt_packages=(zsh curl git unzip)
 missing=()
 for pkg in "${apt_packages[@]}"; do
     command -v "$pkg" &> /dev/null || missing+=("$pkg")
