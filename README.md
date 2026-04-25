@@ -1,4 +1,4 @@
-# Dotfiles Lite
+# Dotfiles
 
 Minimal shell configuration for **production Debian/Ubuntu** VMs.
 
@@ -14,14 +14,14 @@ Minimal shell configuration for **production Debian/Ubuntu** VMs.
 One-liner:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/marcfabregatb/dotfiles-lite/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/marcfabregatb/dotfiles/main/install.sh)
 ```
 
 Or manually:
 
 ```bash
-git clone https://github.com/marcfabregatb/dotfiles-lite.git ~/dotfiles-lite
-cd ~/dotfiles-lite && ./install.sh
+git clone https://github.com/marcfabregatb/dotfiles.git ~/dotfiles
+cd ~/dotfiles && ./install.sh
 ```
 
 ## Files
