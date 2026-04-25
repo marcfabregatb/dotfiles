@@ -61,4 +61,4 @@ if [ "$SHELL" != "$(command -v zsh)" ]; then
     sudo chsh -s "$(command -v zsh)" "$(whoami)"
 fi
 
-echo "Done! Restart your terminal or run: source ~/.zshrc"
+echo "Done! Run 'zsh' to start your new shell or restart your terminal."
