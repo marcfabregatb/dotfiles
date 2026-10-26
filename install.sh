@@ -21,7 +21,7 @@ rm -f "$HOME"/.zcompdump*
 rm -rf "$DOTFILES_DIR/plugins"
 
 # -- Install apt packages (only missing ones) --
-apt_packages=(zsh curl git unzip zsh-autosuggestions zsh-syntax-highlighting)
+apt_packages=(zsh curl git zsh-autosuggestions zsh-syntax-highlighting)
 missing=()
 for pkg in "${apt_packages[@]}"; do
     dpkg -s "$pkg" &> /dev/null || missing+=("$pkg")
@@ -35,13 +35,6 @@ fi
 # -- Symlink config files --
 echo "Creating symlinks..."
 ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-
-# -- Install Oh My Posh (direct binary, no Homebrew needed) --
-if ! command -v oh-my-posh &> /dev/null; then
-    echo "Installing Oh My Posh..."
-    curl -s https://ohmyposh.dev/install.sh | sudo bash -s -- -d /usr/local/bin
-    oh-my-posh font install CaskaydiaCove
-fi
 
 # -- Set zsh as default shell --
 if [ "$(id -u)" -eq 0 ]; then

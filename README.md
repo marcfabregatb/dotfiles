@@ -5,9 +5,11 @@ Minimal shell configuration for **production Debian/Ubuntu** VMs.
 ## What's included
 
 **Shell (Zsh):**
-- **Oh My Posh** prompt with environment-aware colors
+- **Native zsh prompt** (no external binaries) with OS, user@host, path, git and exit-status segments; user@host turns red as root and purple on `-dev` hosts
 - **zsh-autosuggestions** - fish-like history suggestions (Right Arrow to accept)
 - **zsh-syntax-highlighting** - colors commands as you type
+
+Everything is installed from apt; nothing is downloaded from outside the distribution's repositories. Prompt icons need a [Nerd Font](https://www.nerdfonts.com/) in your local terminal.
 
 ## Install
 
@@ -28,5 +30,5 @@ cd ~/dotfiles && ./install.sh
 
 | File | Purpose |
 |---|---|
-| `install.sh` | Idempotent installer (only installs what's missing) |
-| `.zshrc` | Zsh config: plugins, tools, completion, history |
+| `install.sh` | Idempotent installer (only installs what's missing; leaves root's login shell unchanged) |
+| `.zshrc` | Zsh config: prompt, plugins, completion, history |
