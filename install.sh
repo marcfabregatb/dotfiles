@@ -44,7 +44,9 @@ if ! command -v oh-my-posh &> /dev/null; then
 fi
 
 # -- Set zsh as default shell --
-if [ "$SHELL" != "$(command -v zsh)" ]; then
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Running as root: leaving root's login shell unchanged (run 'zsh' to use it)."
+elif [ "$SHELL" != "$(command -v zsh)" ]; then
     echo "Setting zsh as default shell..."
     sudo chsh -s "$(command -v zsh)" "$(whoami)"
 fi
