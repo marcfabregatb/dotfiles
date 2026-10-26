@@ -16,13 +16,15 @@ DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 echo "Starting dotfiles installation..."
 
 rm -f "$HOME"/.zcompdump*
-mkdir -p "$DOTFILES_DIR/plugins"
+
+# Plugins now come from apt; remove clones left by older installs
+rm -rf "$DOTFILES_DIR/plugins"
 
 # -- Install apt packages (only missing ones) --
-apt_packages=(zsh curl git unzip)
+apt_packages=(zsh curl git unzip zsh-autosuggestions zsh-syntax-highlighting)
 missing=()
 for pkg in "${apt_packages[@]}"; do
-    command -v "$pkg" &> /dev/null || missing+=("$pkg")
+    dpkg -s "$pkg" &> /dev/null || missing+=("$pkg")
 done
 
 if [ ${#missing[@]} -gt 0 ]; then
@@ -33,20 +35,6 @@ fi
 # -- Symlink config files --
 echo "Creating symlinks..."
 ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-
-# -- Clone zsh plugins --
-install_plugin() {
-    local name=$1 url=$2
-    local target="$DOTFILES_DIR/plugins/$name"
-    if [ ! -d "$target" ] || [ -z "$(ls -A "$target" 2>/dev/null)" ]; then
-        rm -rf "$target"
-        echo "Downloading $name..."
-        git clone --depth 1 "$url" "$target"
-    fi
-}
-
-install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
-install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
 
 # -- Install Oh My Posh (direct binary, no Homebrew needed) --
 if ! command -v oh-my-posh &> /dev/null; then
