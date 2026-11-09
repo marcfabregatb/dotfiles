@@ -1,0 +1,27 @@
+## Dotfiles nano config. System syntaxes still load from /etc/nanorc; this file
+## only adds what nano lacks: highlighting for dotenv files.
+## Uses the classic color names so it works on older nano releases too.
+
+## Dotenv files: .env, .env.<anything>, *.env, .envrc
+syntax env "\.env$|(^|/)\.env\.[^/]+$|(^|/)\.envrc$"
+comment "#"
+
+# Key and its "=" (the key is recolored next, leaving the "=" in this color)
+color brightmagenta "^[[:blank:]]*(export[[:blank:]]+)?[[:alpha:]_][[:alnum:]_.]*[[:blank:]]*="
+color brightcyan "^[[:blank:]]*(export[[:blank:]]+)?[[:alpha:]_][[:alnum:]_.]*"
+color brightgreen "^[[:blank:]]*export[[:blank:]]+"
+
+# Inline comments (strings below win, so a " #" inside quotes stays a string)
+color brightblack "[[:blank:]]#.*"
+
+# Quoted values
+color brightyellow ""([^"\]|\\.)*"|'[^']*'"
+
+# Variable references, also inside double quotes where most loaders expand them
+color brightred "\$\{[^}]*\}|\$[[:alpha:]_][[:alnum:]_]*"
+
+# Whole-line comments
+color brightblack "^[[:blank:]]*#.*"
+
+# Trailing whitespace: many dotenv parsers keep it as part of the value
+color ,red "[[:blank:]]+$"

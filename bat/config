@@ -1,0 +1,9 @@
+# bat config. Debian/Ubuntu install bat as `batcat`; .zshrc aliases it to `bat`.
+
+# Behave like cat: print straight to the terminal, no pager or decorations
+--paging=never
+--style=plain
+
+# Highlight every dotenv-style file, not just bat's built-in list (.env, .env.local, ...)
+--map-syntax='*.env:DotENV'
+--map-syntax='.env.*:DotENV'
